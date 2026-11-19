@@ -1,0 +1,9 @@
+services:
+  finance:
+    environment:
+      BANKLINK_API_KEY_FILE: /run/secrets/banklink_api_key
+    secrets:
+      - banklink_api_key
+secrets:
+  banklink_api_key:
+    file: ./secrets/banklink-api-key
