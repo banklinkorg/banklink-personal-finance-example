@@ -21,4 +21,8 @@ cpSync(
   join(repo, "banklink/website/public/personal-finance"),
   { recursive: true },
 );
+copyFileSync(
+  resolve("ASSET-NOTICE.md"),
+  join(repo, "banklink/website/public/personal-finance/ASSET-NOTICE.md"),
+);
 console.log("Synchronized Spendmap interface, model and local merchant icons.");
