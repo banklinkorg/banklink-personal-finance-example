@@ -39,10 +39,10 @@ export function SpendingGraph({
       {
         id: "hub",
         type: "hub",
-        label: "Spendmap",
+        label: "You",
         days: events.map((t) => Number(t.date.slice(8))),
         amount: 0,
-        color: "#b8c0cb",
+        color: "#a44e32",
       },
     ];
     const links: Link[] = [];
@@ -54,7 +54,7 @@ export function SpendingGraph({
         label: account,
         days: rows.map((t) => Number(t.date.slice(8))),
         amount: 0,
-        color: "#9db7dd",
+        color: "#b87152",
       });
       links.push({
         source: "hub",
@@ -113,7 +113,7 @@ export function SpendingGraph({
           days.some((d) => d <= latest.current.visibleDay);
         const radius = (n: Node) =>
           n.type === "hub"
-            ? 4
+            ? 18
             : n.type === "account"
               ? 6
               : 13 +
@@ -135,9 +135,9 @@ export function SpendingGraph({
               : 1;
           c.beginPath();
           c.arc(n.x, n.y, r, 0, Math.PI * 2);
-          c.fillStyle = n.type === "merchant" ? "#272b31" : n.color;
+          c.fillStyle = n.type === "merchant" ? "#ffffff" : n.color;
           c.fill();
-          c.strokeStyle = n.type === "merchant" ? "#4b5360" : n.color;
+          c.strokeStyle = n.type === "merchant" ? "#d8c9b9" : n.color;
           c.lineWidth = 1;
           c.stroke();
           if (m) {
@@ -152,7 +152,7 @@ export function SpendingGraph({
               const h = ratio >= 1 ? (r * 1.7) / ratio : r * 1.7;
               c.drawImage(image, n.x - w / 2, n.y - h / 2, w, h);
             } else {
-              c.fillStyle = "#d9e0eb";
+              c.fillStyle = "#6f3524";
               c.font = `600 ${Math.max(9, r * 0.55)}px "Red Hat Text Variable", "Red Hat Text", Arial, sans-serif`;
               c.textAlign = "center";
               c.textBaseline = "middle";
@@ -160,8 +160,15 @@ export function SpendingGraph({
             }
             c.restore();
           }
-          if (n.type === "account" || scale > 1.2) {
-            c.fillStyle = "#d7dde6";
+          if (n.type === "hub") {
+            c.fillStyle = "#ffffff";
+            c.font = '600 12px "Red Hat Text Variable", Arial, sans-serif';
+            c.textAlign = "center";
+            c.textBaseline = "middle";
+            c.fillText("You", n.x, n.y);
+          }
+          if (n.type === "account" || (n.type === "merchant" && scale > .5)) {
+            c.fillStyle = "#5f5147";
             c.font =
               '12px "Red Hat Text Variable", "Red Hat Text", Arial, sans-serif';
             c.textAlign = "left";
@@ -183,8 +190,8 @@ export function SpendingGraph({
           .linkColor((l) =>
             latest.current.focusedDay &&
             !l.days.includes(latest.current.focusedDay)
-              ? "#424a5525"
-              : "#68778c70",
+              ? "#d8c9b925"
+              : "#bda38b80",
           )
           .linkWidth(0.8)
           .nodePointerAreaPaint((n, color, c) => {
@@ -270,7 +277,7 @@ export function SpendingGraph({
       <span className="sm-graph-help">
         {error
           ? "Graph unavailable. Use the transaction and category views below."
-          : "Drag to explore · scroll to zoom · select a merchant"}
+          : "Select a shop to see what you spent there"}
       </span>
       {transactions.filter((t) => t.kind === "expense").length === 0 && (
         <div className="sm-graph-empty">No spending in this view.</div>
@@ -279,7 +286,7 @@ export function SpendingGraph({
         className="sm-fit"
         onClick={() => graph.current?.zoomToFit(0, 55)}
       >
-        Fit graph
+        Show full map
       </button>
     </div>
   );

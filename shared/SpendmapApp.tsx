@@ -5,7 +5,8 @@ import {
   RotateCcw,
   RefreshCw,
   Search,
-  Network,
+  ChartPie,
+  WalletCards,
   List,
   CalendarDays,
   X,
@@ -26,7 +27,7 @@ import "./spendmap.css";
 export type SpendmapProps = {
   state: State;
   dispatch: (action: Action) => Promise<void>;
-  sync: () => Promise<void>;
+  sync?: () => Promise<void>;
   reset?: () => void;
   signOut?: () => void;
 };
@@ -177,12 +178,12 @@ export function SpendmapApp({
         <span>
           {day
             ? `${day} ${label(month)} · ${money(daily[day - 1]?.amount ?? 0)}`
-            : "Daily spending · choose a day to focus"}
+            : "Your daily spending · select a day"}
         </span>
         <div>
           <button
             disabled={busy}
-            aria-label={playing ? "Pause playback" : "Play month"}
+            aria-label={playing ? "Pause playback" : "Replay month"}
             onClick={() => {
               if (playing) setPlaying(false);
               else {
@@ -193,7 +194,7 @@ export function SpendmapApp({
             }}
           >
             {playing ? <Pause size={14} /> : <Play size={14} />}{" "}
-            {playing ? "Pause" : "Play month"}
+            {playing ? "Pause" : "Replay month"}
           </button>
           <button
             onClick={() => {
@@ -253,10 +254,10 @@ export function SpendmapApp({
     <section className="sm" aria-label="Spendmap personal finance application">
       <aside className="sm-rail">
         <div className="sm-brand">
-          <Network size={21} />
-          spendmap<span>.</span>
+          <WalletCards size={23} />
+          Spendmap<span>.</span>
         </div>
-        <p className="sm-rail-label">Your sources</p>
+        <p className="sm-rail-label">Your accounts</p>
         <nav aria-label="Spending accounts">
           <button
             aria-pressed={account === "all"}
@@ -293,11 +294,11 @@ export function SpendmapApp({
       <div className="sm-workspace">
         <header className="sm-topline">
           <div>
-            <h2>Your spending, connected.</h2>
-            <p>Follow the places and patterns in your month.</p>
+            <h2>Your month, made clear.</h2>
+            <p>Get to know where your money goes.</p>
           </div>
           <span className="sm-mode">
-            {dataset === "sample" ? "Sample data" : "BankLink sandbox"}
+            {dataset === "sample" ? "Example account" : "BankLink sandbox"}
           </span>
           {signOut && <button onClick={signOut}>Sign out</button>}
         </header>
@@ -323,54 +324,43 @@ export function SpendmapApp({
           </select>
           <div className="sm-view-tabs" aria-label="Spending views">
             {[
-              { name: "Graph", Icon: Network },
-              { name: "Calendar", Icon: CalendarDays },
-              { name: "Transactions", Icon: List },
-            ].map(({ name, Icon }) => (
+              { name: "Graph", label: "Spending", Icon: ChartPie },
+              { name: "Calendar", label: "Calendar", Icon: CalendarDays },
+              { name: "Transactions", label: "Activity", Icon: List },
+            ].map(({ name, label: viewLabel, Icon }) => (
               <button
                 key={name}
                 aria-pressed={view === name}
                 onClick={() => setView(name)}
               >
                 <Icon size={14} />
-                {name}
+                {viewLabel}
               </button>
             ))}
           </div>
-          <button
+          {sync && <button
             className="sm-sync"
             disabled={busy}
             onClick={() =>
               run(
                 sync,
                 s.mode === "sample"
-                  ? "Sample dataset is ready. Configure a test key in the standalone app to import sandbox data."
+                  ? "Your example transactions are ready. The setup guide explains how to connect a sandbox account."
                   : "BankLink sandbox import complete.",
               )
             }
           >
             <RefreshCw size={14} />
-            {busy ? "Updating…" : "Update feed"}
-          </button>
-          {reset && (
-            <button
-              onClick={() => {
-                reset();
-                setDataset("sample");
-                setAccount("all");
-                selectMonth("2026-04");
-              }}
-            >
-              Reset example
-            </button>
-          )}
+            {busy ? "Updating…" : "Refresh accounts"}
+          </button>}
+
         </div>
         {s.mode === "sandbox" && (
           <div className="sm-dataset">
             <label>
-              Dataset
+              Show transactions
               <select
-                aria-label="Dataset"
+                aria-label="Transactions"
                 value={dataset}
                 onChange={(e) => {
                   setDataset(e.target.value as "sample" | "banklink");
@@ -419,8 +409,7 @@ export function SpendmapApp({
             <strong>{money(spend(shown))}</strong>
           </div>
           <p>
-            {shown.filter((t) => t.kind === "expense").length} purchases ·
-            income and transfers excluded
+            {shown.filter((t) => t.kind === "expense").length} purchases this month
           </p>
         </div>
         <div className="sm-months" aria-label="Months">
@@ -507,9 +496,9 @@ export function SpendmapApp({
                     ? merchants[merchant]?.label
                     : day
                       ? `Transactions · day ${day}`
-                      : "Transactions behind the graph"}
+                      : "Your transactions"}
                 </h3>
-                <p>{filtered.length} records in this view</p>
+                <p>{filtered.length} transactions shown</p>
               </div>
               <div>
                 {(day || merchant) && (
@@ -519,10 +508,10 @@ export function SpendmapApp({
                       setMerchant(null);
                     }}
                   >
-                    Clear focus
+                    Show all transactions
                   </button>
                 )}
-                <button onClick={() => download(filtered)}>Export CSV</button>
+                <button onClick={() => download(filtered)}>Download CSV</button>
               </div>
             </div>
             <label className="sm-search">
@@ -625,7 +614,7 @@ export function SpendmapApp({
           </section>
           <aside className="sm-breakdown">
             <h3>Where it went</h3>
-            <p>Categories · visible month activity</p>
+            <p>Your spending by category</p>
             {categories.map((c) => (
               <div className="sm-category" key={c.category}>
                 <span>{c.category}</span>
@@ -664,10 +653,20 @@ export function SpendmapApp({
           </aside>
         </div>
         <footer className="sm-footer">
-          <span>Spendmap · based on the local graph prototype</span>
+          {reset && (
+            <button
+              onClick={() => {
+                reset();
+                setDataset("sample");
+                setAccount("all");
+                selectMonth("2026-04");
+              }}
+            >
+              Reset demo
+            </button>
+          )}
           <span>
-            Merchant categories are suggestions. Review them against your
-            transactions.
+            Spending totals exclude income and transfers. Categories are suggestions you can review.
           </span>
         </footer>
       </div>

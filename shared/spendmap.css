@@ -1,9 +1,13 @@
 .sm {
-  --sm-bg: #1e1e1e;
-  --sm-rail: #252525;
-  --sm-line: #3a3a3a;
-  --sm-text: #e0e3e8;
-  --sm-muted: #abb2bd;
+  /* Spendmap is an independent consumer example with a warm, light palette. */
+  --sm-bg: #faf8f4;
+  --sm-rail: #fffdf9;
+  --sm-line: #e4ded5;
+  --sm-text: #302c28;
+  --sm-muted: #71665e;
+  --sm-accent: #a44e32;
+  --sm-soft: #f7e4d9;
+  container: spendmap / inline-size;
   display: flex;
   isolation: isolate;
   position: relative;
@@ -14,7 +18,7 @@
   font-size: 14px;
   line-height: 1.5;
   border: 1px solid var(--sm-line);
-  border-radius: 4px;
+  border-radius: 16px; /* deslop-ok: Independent personal finance app uses softer corners. */
   overflow: hidden;
 }
 .sm * {
@@ -35,27 +39,27 @@
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 6px;
   padding: 7px 10px;
   color: var(--sm-muted);
   background: transparent;
   line-height: 1.4;
 }
 .sm button:hover {
-  background: #33363b;
-  color: #fff;
+  background: #f2ece4;
+  color: var(--sm-text);
 }
 .sm button[aria-pressed="true"] {
-  background: #343c48;
-  color: #fff;
-  border-color: #546278;
+  background: #f7e4d9;
+  color: var(--sm-text);
+  border-color: #ddb9a5;
 }
 .sm button:disabled {
   cursor: wait;
   opacity: 0.65;
 }
 .sm :is(button, a, input, select):focus-visible {
-  outline: 2px solid #9db7dd;
+  outline: 2px solid #a44e32;
   outline-offset: 2px;
 }
 .sm h2,
@@ -70,7 +74,7 @@
 }
 .sm h2 {
   font-size: 22px;
-  font-weight: 550;
+  font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.3;
 }
@@ -80,7 +84,7 @@
 }
 .sm small {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
   margin-top: 3px;
 }
@@ -88,19 +92,19 @@
 .sm input {
   min-width: 0;
   max-width: 100%;
-  background: #292c31;
+  background: #ffffff;
   color: var(--sm-text);
-  border: 1px solid #4a4e56;
-  border-radius: 3px;
+  border: 1px solid #cfc4b9;
+  border-radius: 6px;
   padding: 7px 10px;
-  font-size: 12px;
+  font-size: 13px;
   min-height: 33px;
 }
 .sm input {
   cursor: text;
 }
 .sm-rail {
-  width: 180px;
+  width: 190px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -113,16 +117,16 @@
   align-items: center;
   gap: 8px;
   font-size: 23px;
-  font-weight: 550;
+  font-weight: 600;
   letter-spacing: -0.03em;
   padding: 0 8px 35px;
 }
 .sm-brand > span {
   margin-left: -7px;
-  color: #9db7dd;
+  color: #a44e32;
 }
 .sm-rail-label {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--sm-muted);
   padding: 0 10px 12px;
 }
@@ -135,18 +139,18 @@
   text-align: left;
   width: 100%;
   padding: 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .sm-rail-footer {
   margin-top: auto;
   padding: 45px 10px 0;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
   line-height: 1.7;
 }
 .sm-rail-footer button {
   padding: 0;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 14px;
   display: block;
   text-decoration: underline;
@@ -166,16 +170,16 @@
   border-bottom: 1px solid var(--sm-line);
 }
 .sm-topline p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--sm-muted);
   margin-top: 5px;
 }
 .sm-mode {
-  border: 1px solid #4a4e56;
+  border: 1px solid #cfc4b9;
   color: var(--sm-muted);
-  font-size: 10px;
+  font-size: 11px;
   padding: 4px 7px;
-  border-radius: 3px;
+  border-radius: 6px;
   white-space: nowrap;
 }
 .sm-controls {
@@ -184,67 +188,70 @@
   gap: 12px;
   flex-wrap: wrap;
   padding: 15px 25px;
-  border-bottom: 1px solid #303030;
+  border-bottom: 1px solid #e4ded5;
 }
 .sm-view-tabs {
   display: flex;
   gap: 3px;
 }
 .sm-view-tabs button {
-  font-size: 12px;
+  font-size: 13px;
 }
 .sm .sm-sync {
   margin-left: auto;
-  border-color: #4a4e56;
-  font-size: 12px;
+  border-color: #cfc4b9;
+  font-size: 13px;
 }
 .sm-summary {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 20px;
-  padding: 23px 25px 18px;
+  padding: 24px;
+  margin: 20px 24px 16px;
+  background: #f7e4d9;
+  border-radius: 16px; /* deslop-ok: Spendmap spending summary has its own consumer aesthetic. */
 }
 .sm-summary span {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--sm-muted);
 }
 .sm-summary strong {
-  font-family: "Red Hat Mono Variable", "Red Hat Mono", monospace;
-  font-size: 28px;
+  font-family: "Red Hat Text Variable", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 38px;
   line-height: 1.3;
   letter-spacing: -0.03em;
-  font-weight: 450;
+  font-weight: 600;
   display: block;
   margin-top: 6px;
 }
 .sm-summary p {
-  font-size: 11px;
-  color: var(--sm-muted);
+  font-size: 12px;
+  color: #784631;
   text-align: right;
 }
 .sm-months {
   display: flex;
   gap: 6px;
   overflow: auto;
-  border-bottom: 1px solid #303030;
-  padding: 0 25px 14px;
+  padding: 0 24px 16px;
 }
 .sm-months button {
-  font-size: 12px;
+  font-size: 13px;
   flex-direction: column;
   gap: 0;
   min-width: 58px;
 }
 .sm-months small {
-  font-size: 10px;
+  font-size: 11px;
   margin: 0;
 }
 .sm-graph {
   position: relative;
-  height: 420px;
+  height: 440px;
   overflow: hidden;
-  background: #1e1e1e;
+  background: #faf8f4;
 }
 .sm-graph-canvas {
   position: absolute;
@@ -257,8 +264,8 @@
   position: absolute;
   bottom: 13px;
   left: 20px;
-  font-size: 11px;
-  color: #abb2bd;
+  font-size: 12px;
+  color: #71665e;
   pointer-events: none;
 }
 .sm-graph-note {
@@ -266,38 +273,38 @@
   top: 18px;
   left: 20px;
   padding: 8px 12px;
-  background: #252525ed;
-  border: 1px solid #3a3a3a;
-  border-radius: 3px;
+  background: #fffdf9f2;
+  border: 1px solid #e4ded5;
+  border-radius: 6px;
   pointer-events: none;
-  font-size: 13px;
+  font-size: 14px;
 }
 .sm .sm-fit {
   position: absolute;
   bottom: 8px;
   right: 14px;
-  font-size: 11px;
-  border-color: #3a3a3a;
-  background: #252525;
+  font-size: 12px;
+  border-color: #e4ded5;
+  background: #fffdf9;
 }
 .sm-graph-empty {
   position: absolute;
   inset: 45%;
   white-space: nowrap;
   color: var(--sm-muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .sm-timeline {
   border-block: 1px solid var(--sm-line);
   padding: 12px 20px 9px;
-  background: #222222;
+  background: #fffdf9;
 }
 .sm-timeline-caption {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
   margin-bottom: 9px;
 }
@@ -307,7 +314,7 @@
 }
 .sm-timeline-caption button {
   padding: 5px 7px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .sm-day-scroll {
   overflow: auto;
@@ -326,7 +333,7 @@
   border: 0;
   border-radius: 2px;
   gap: 2px;
-  font-size: 10px;
+  font-size: 11px;
 }
 .sm-day-height {
   position: relative;
@@ -339,10 +346,10 @@
   left: 15%;
   right: 15%;
   display: block;
-  background: #788597;
+  background: #b87152;
 }
 .sm-day-bars button[aria-pressed="true"] .sm-day-height i {
-  background: #c0d3ef;
+  background: #8e4029;
 }
 .sm-day-bars .sm-future {
   opacity: 0.25;
@@ -363,7 +370,7 @@
 }
 .sm-section-title p,
 .sm-breakdown > p {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
   margin-top: 5px;
 }
@@ -372,8 +379,8 @@
   gap: 5px;
 }
 .sm-section-title button {
-  font-size: 11px;
-  border-color: #4a4e56;
+  font-size: 12px;
+  border-color: #cfc4b9;
   white-space: nowrap;
   padding: 6px 8px;
 }
@@ -382,9 +389,9 @@
   align-items: center;
   gap: 8px;
   padding: 8px 10px;
-  border: 1px solid #4a4e56;
-  border-radius: 3px;
-  background: #252525;
+  border: 1px solid #cfc4b9;
+  border-radius: 6px;
+  background: #fffdf9;
   margin-bottom: 12px;
   color: var(--sm-muted);
 }
@@ -403,18 +410,18 @@
   overflow: auto;
   max-height: 350px;
   border: 1px solid var(--sm-line);
-  border-radius: 3px;
+  border-radius: 6px;
 }
 .sm table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
 }
 .sm th {
   text-align: left;
   position: sticky;
   top: 0;
-  background: #292929;
+  background: #f6f1e9;
   font-weight: 500;
   color: var(--sm-muted);
   padding: 11px 12px;
@@ -423,29 +430,30 @@
   z-index: 1;
 }
 .sm td {
-  border-bottom: 1px solid #303030;
+  border-bottom: 1px solid #e4ded5;
   padding: 11px 12px;
   min-width: 110px;
 }
 .sm td:first-child {
-  min-width: 180px;
+  min-width: 190px;
   max-width: 270px;
 }
 .sm td small {
-  font-size: 10px;
+  font-size: 11px;
   overflow-wrap: anywhere;
 }
 .sm tr:last-child td {
   border: 0;
 }
 .sm td select {
-  font-size: 11px;
+  font-size: 12px;
   padding: 5px;
 }
 .sm-number {
   text-align: right !important;
   white-space: nowrap;
-  font-family: "Red Hat Mono Variable", "Red Hat Mono", monospace;
+  font-family: "Red Hat Text Variable", Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
 .sm-breakdown {
   border-left: 1px solid var(--sm-line);
@@ -457,17 +465,17 @@
   grid-template-columns: 1fr auto;
   gap: 5px;
   padding-top: 15px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .sm-category strong {
-  font-weight: 450;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 .sm-category i {
   grid-column: 1/-1;
   display: block;
   height: 3px;
-  background: #788597;
+  background: #b87152;
 }
 .sm-merchants-heading {
   margin-top: 25px !important;
@@ -486,7 +494,7 @@
   text-align: left;
   border-radius: 2px;
   padding: 9px 3px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .sm-merchant-list img,
 .sm-initials {
@@ -498,16 +506,16 @@
 .sm-initials {
   display: grid;
   place-items: center;
-  border: 1px solid #4a4e56;
-  font-size: 9px;
+  border: 1px solid #cfc4b9;
+  font-size: 11px;
 }
 .sm-merchant-list small {
-  font-size: 10px;
+  font-size: 11px;
 }
 .sm-merchant-list strong {
   margin-left: auto;
   white-space: nowrap;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
 }
 .sm-footer {
@@ -515,26 +523,26 @@
   justify-content: space-between;
   gap: 15px;
   padding: 0 25px 20px;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--sm-muted);
 }
 .sm-feedback > p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 13px;
   padding: 12px 25px;
-  background: #293344;
-  border-bottom: 1px solid #4b5e7a;
+  background: #f7e4d9;
+  border-bottom: 1px solid #ddb9a5;
 }
 .sm-feedback button {
   padding: 0;
 }
 .sm-error {
   padding: 12px 25px;
-  color: #ffc4bd;
-  background: #4a2626;
-  font-size: 12px;
+  color: #9e3528;
+  background: #fff0eb;
+  font-size: 13px;
 }
 .sm-calendar {
   padding: 20px 25px;
@@ -547,7 +555,7 @@
   min-width: 600px;
 }
 .sm-weekdays span {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
   padding: 9px 8px;
 }
@@ -569,20 +577,20 @@
   justify-content: flex-start;
   padding: 8px;
   gap: 7px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .sm-calendar-days strong {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
 }
 .sm-calendar-days small {
-  font-size: 9px;
+  font-size: 11px;
   margin: 0;
 }
 .sm-empty {
   padding: 25px;
   color: var(--sm-muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 .sm-dataset {
   display: flex;
@@ -590,7 +598,7 @@
   align-items: center;
   padding: 10px 25px;
   border-bottom: 1px solid var(--sm-line);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--sm-muted);
 }
 .sm-dataset label {
@@ -611,7 +619,7 @@
 }
 @media (max-width: 1000px) {
   .sm-rail {
-    width: 145px;
+    width: 160px;
     padding-inline: 8px;
   }
   .sm-brand {
@@ -632,7 +640,7 @@
     align-items: flex-start;
   }
   .sm-summary p {
-    max-width: 180px;
+    max-width: 190px;
   }
   .sm-controls,
   .sm-topline {
@@ -665,7 +673,7 @@
   .sm-rail nav button {
     flex-shrink: 0;
     width: auto;
-    font-size: 11px;
+    font-size: 12px;
     white-space: nowrap;
     padding: 7px;
   }
@@ -681,10 +689,10 @@
     font-size: 21px;
   }
   .sm-topline p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .sm-mode {
-    font-size: 9px;
+    font-size: 11px;
     padding: 3px 5px;
   }
   .sm-controls {
@@ -693,14 +701,15 @@
   }
   .sm .sm-sync {
     margin-left: 0;
-    font-size: 11px;
+    font-size: 12px;
   }
   .sm-view-tabs button {
-    font-size: 11px;
+    font-size: 12px;
     padding: 6px;
   }
   .sm-summary {
-    padding: 18px 15px;
+    padding: 20px;
+    margin: 16px 15px;
     display: block;
   }
   .sm-summary strong {
@@ -718,7 +727,7 @@
     height: 360px;
   }
   .sm-graph-help {
-    font-size: 10px;
+    font-size: 11px;
     left: 12px;
     bottom: 45px;
     max-width: 80%;
@@ -774,4 +783,53 @@
 }
 .sm td:last-child {
   min-width: 160px;
+}
+
+.sm-brand svg { color:var(--sm-accent); }
+.sm-rail nav button[aria-pressed="true"] { border-color:transparent; }
+.sm-topline { border-bottom:0; padding-bottom:12px; }
+.sm-mode { background:var(--sm-soft); color:#784631; border-color:transparent; padding:6px 10px; }
+.sm-controls { border-bottom:0; gap:10px; }
+.sm-view-tabs { padding:4px; background:#f1ece5; border-radius:6px; }
+.sm-view-tabs button[aria-pressed="true"] { background:#fffdf9; border-color:#ddd2c5; color:#8e4029; }
+.sm-summary > div > span { color:#784631; }
+.sm-summary strong { color:#6f3524; }
+.sm-summary p { max-width:215px; font-size:12px; line-height:1.6; }
+.sm-search { background:#fff; }
+.sm-category i,.sm-day-height i { border-radius:3px; }
+.sm-merchant-list img,.sm-initials { background:#fff; border-radius:6px; }
+.sm-footer { flex-wrap:wrap; align-items:center; padding-top:8px; }
+.sm-footer > button { font-size:12px; text-decoration:underline; text-underline-offset:3px; }
+.sm-calendar-days button[aria-pressed="true"] { background:var(--sm-soft); }
+@container spendmap (max-width:1000px) {
+  .sm-details { grid-template-columns:minmax(0,1fr); }
+  .sm-breakdown { display:none; }
+}
+@media (max-width:600px) {
+  .sm-summary { margin:16px 15px; padding:20px; }
+  .sm-summary strong { font-size:34px; }
+  .sm-controls select { width:100%; }
+  .sm-view-tabs { width:100%; }
+  .sm-view-tabs button { flex:1; font-size:12px; }
+  .sm-mode { align-self:flex-start; font-size:10px; }
+  .sm-topline { align-items:flex-start; }
+  .sm-graph { height:360px; }
+}
+
+@media (max-width:600px) {
+  .sm-mode,.sm-months { display:none; }
+  .sm-topline { padding-top:16px; padding-bottom:6px; }
+  .sm h2 { font-size:20px; }
+  .sm-topline p { font-size:12px; margin-top:4px; }
+  .sm-rail nav { scrollbar-width:thin; }
+  .sm-rail nav::-webkit-scrollbar { height:3px; }
+  .sm-controls { gap:8px; }
+  .sm-view-tabs button { white-space:nowrap; padding:7px 5px; gap:5px; }
+  .sm-view-tabs button svg { width:13px; }
+  .sm-summary { padding:18px; margin:10px 15px 12px; }
+  .sm-summary p { margin-top:6px; }
+}
+
+@media (max-width:600px) {
+  .sm-graph-help { bottom:12px; max-width:55%; }
 }
